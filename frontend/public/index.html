@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tablón de Eventos</title>
+  <link rel="stylesheet" href="../src/css/styles.css">
+</head>
+<body>
+  <header>
+    <h1>Eventos de la Semana</h1>
+    <div class="filtros">
+      <select id="filtro-tipo">
+        <option value="">Todos los tipos</option>
+        <option value="recital">Recital</option>
+        <option value="charla">Charla</option>
+        <option value="lanzamiento">Lanzamiento</option>
+      </select>
+      <button id="btn-filtrar">Filtrar</button>
+      <a href="login.html" class="btn-login">Login</a>
+    </div>
+  </header>
+
+  <main>
+    <div id="eventos-container" class="eventos-grid"></div>
+    <div id="mensaje-error" class="error"></div>
+  </main>
+
+  <script src="../src/js/eventos.js"></script>
+</body>
+</html>
