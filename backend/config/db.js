@@ -8,8 +8,7 @@ const pool = mariadb.createPool({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  connectionLimit: 5,
-  allowPublicKeyRetrieval: true
+  connectionLimit: 5
 });
 
 // Test de conexión
@@ -19,7 +18,7 @@ pool.getConnection()
     conn.release();
   })
   .catch(err => {
-    console.error('❌ Error de conexión a MariaDB:', err.message);
+    console.error('❌ Error de conexión:', err.message);
   });
 
-export default pool;
+export default pool; 

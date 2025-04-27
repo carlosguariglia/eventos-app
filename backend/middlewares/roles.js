@@ -1,4 +1,4 @@
-const db = require('../config/db');
+import db from '../config/db.js';  // Cambiado de require a import
 
 export const esAdmin = (req, res, next) => {
     if (req.usuarioRol !== 'admin') {
@@ -28,9 +28,4 @@ export const esDueñoOAdmin = async (req, res, next) => {
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
-};
-
-module.exports = { 
-    esAdmin,
-    esDueñoOAdmin  // <-- Middleware nuevo integrado
 };

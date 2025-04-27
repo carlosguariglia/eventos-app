@@ -1,10 +1,10 @@
-const db = require('../config/db');
+import db from '../config/db.js'; 
 
-const obtenerEventos = async (filtros = {}) => {
-  let query = 'SELECT * FROM eventos WHERE 1=1';
+export const obtenerEventos = async (filtros = {}) => {
+  let query = 'SELECT * FROM eventos WHERE fecha BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL 7 DAY)';
   const params = [];
 
-  // Filtros: tipo, estado, usuario_id, fecha
+  
   if (filtros.tipo) {
     query += ' AND tipo_evento = ?';
     params.push(filtros.tipo);
@@ -13,10 +13,12 @@ const obtenerEventos = async (filtros = {}) => {
     query += ' AND estado = ?';
     params.push(filtros.estado);
   }
-  // ... (agregar más filtros según necesites)
+  if (filtros.usuario_id) {
+    query += ' AND usuario_id = ?';
+    params.push(filtros.usuario_id);
+  }
 
   const [eventos] = await db.query(query, params);
   return eventos;
 };
 
-module.exports = { obtenerEventos };

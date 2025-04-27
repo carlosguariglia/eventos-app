@@ -1,7 +1,9 @@
-const express = require('express');
-const router = express.Router();
-const verificarToken = require('../middlewares/auth');
-const { actualizarPerfil } = require('../controllers/usuarios.controller');
+import { Router } from 'express';
+import { actualizarPerfil } from '../controllers/usuarios.controller.js';
+import { verificarToken } from '../middlewares/auth.js';
+
+const router = Router();
 
 router.put('/:id', verificarToken, actualizarPerfil);
-module.exports = router;
+
+export default router;
