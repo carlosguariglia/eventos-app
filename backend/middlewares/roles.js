@@ -1,11 +1,36 @@
+const db = require('../config/db');
+
 const esAdmin = (req, res, next) => {
-    const token = req.headers['authorization']?.split(' ')[1];
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    
-    if (decoded.rol !== 'admin') {
-      return res.status(403).json({ error: 'Acceso no autorizado' });
+    if (req.usuarioRol !== 'admin') {
+        return res.status(403).json({ error: 'Acceso reservado a administradores' });
     }
     next();
-  };
-  
-  module.exports = { esAdmin };
+};
+
+const esDueñoOAdmin = async (req, res, next) => {
+    try {
+        const [evento] = await db.query(
+            'SELECT usuario_id FROM eventos WHERE id = ?', 
+            [req.params.id]
+        );
+
+        if (!evento) {
+            return res.status(404).json({ error: 'Evento no encontrado' });
+        }
+
+        if (evento.usuario_id !== req.usuarioId && req.usuarioRol !== 'admin') {
+            return res.status(403).json({ 
+                error: 'No eres el dueño de este evento ni administrador' 
+            });
+        }
+
+        next();
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+module.exports = { 
+    esAdmin,
+    esDueñoOAdmin  // <-- Middleware nuevo integrado
+};

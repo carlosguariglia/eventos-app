@@ -1,14 +1,15 @@
 const express = require('express');
-const { obtenerEventos } = require('../models/eventos.model');
 const router = express.Router();
+const { filtrarEventos, crearEvento, actualizarEvento, eliminarEvento } = require('../controllers/eventos.controller');
+const verificarToken = require('../middlewares/auth');
+const { esDueñoOAdmin } = require('../middlewares/roles');
 
-router.get('/', async (req, res) => {
-  try {
-    const eventos = await obtenerEventos(req.query); // Filtros: ?tipo=recital&estado=activo
-    res.json(eventos);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
+// Público
+router.get('/', filtrarEventos);
+
+// Protegidas
+router.post('/', verificarToken, crearEvento);
+router.put('/:id', verificarToken, esDueñoOAdmin, actualizarEvento);
+router.delete('/:id', verificarToken, esDueñoOAdmin, eliminarEvento);
 
 module.exports = router;
