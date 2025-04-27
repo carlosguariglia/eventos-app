@@ -5,19 +5,18 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 async function cargarEventos() {
   try {
-      const url = new URL('http://localhost:4000/eventos');
-      const tipo = document.getElementById('filtro-tipo').value;
-      const estado = document.getElementById('filtro-estado')?.value;
+    const url = new URL('http://localhost:4000/eventos');
+    const tipo = document.getElementById('filtro-tipo').value;
+    const estado = document.getElementById('filtro-estado').value;
 
-      if (tipo) url.searchParams.append('tipo', tipo);
-      if (estado) url.searchParams.append('estado', estado);
+    if (tipo) url.searchParams.append('tipo', tipo);
+    if (estado) url.searchParams.append('estado', estado);
 
-      const response = await fetch(url);
-      if (!response.ok) throw new Error(await response.text());
-      
-      mostrarEventos(await response.json());
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(await response.text());
+    mostrarEventos(await response.json());
   } catch (error) {
-      mostrarError(error);
+    mostrarError(error);
   }
 }
 
@@ -41,4 +40,10 @@ function mostrarError(error) {
           <button onclick="cargarEventos()">Reintentar</button>
       </div>
   `;
+}
+
+function mostrarÉxito(mensaje) {
+  const container = document.getElementById('mensaje-éxito');
+  container.innerHTML = `<div class="éxito">${mensaje}</div>`;
+  setTimeout(() => container.innerHTML = '', 3000);
 }

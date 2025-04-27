@@ -37,6 +37,10 @@ body {
   font-weight: bold;
 }
 
+.evento-terminado {
+  border-left: 4px solid #6c757d;
+}
+
 /* Filtros */
 .filtros {
   background: white;

@@ -1,4 +1,8 @@
 const db = require('../config/db');
+const limit = parseInt(req.query.limit) || 10;
+const offset = parseInt(req.query.offset) || 0;
+const [eventos] = await db.query('SELECT * FROM eventos LIMIT ? OFFSET ?', [limit, offset]);
+
 
 const crearEvento = async (req, res) => {
     try {

@@ -12,4 +12,5 @@ router.post('/', verificarToken, crearEvento);
 router.put('/:id', verificarToken, esDueñoOAdmin, actualizarEvento);
 router.delete('/:id', verificarToken, esDueñoOAdmin, eliminarEvento);
 
+
 module.exports = router;
