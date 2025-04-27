@@ -1,13 +1,13 @@
 const db = require('../config/db');
 
-const esAdmin = (req, res, next) => {
+export const esAdmin = (req, res, next) => {
     if (req.usuarioRol !== 'admin') {
         return res.status(403).json({ error: 'Acceso reservado a administradores' });
     }
     next();
 };
 
-const esDueñoOAdmin = async (req, res, next) => {
+export const esDueñoOAdmin = async (req, res, next) => {
     try {
         const [evento] = await db.query(
             'SELECT usuario_id FROM eventos WHERE id = ?', 

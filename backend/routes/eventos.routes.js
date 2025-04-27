@@ -1,16 +1,18 @@
-const express = require('express');
-const router = express.Router();
-const { filtrarEventos, crearEvento, actualizarEvento, eliminarEvento } = require('../controllers/eventos.controller');
-const verificarToken = require('../middlewares/auth');
-const { esDueñoOAdmin } = require('../middlewares/roles');
+import { Router } from 'express';
+import { 
+  filtrarEventos,
+  crearEvento,
+  actualizarEvento,
+  eliminarEvento
+} from '../controllers/eventos.controller.js';
+import { verificarToken } from '../middlewares/auth.js';
+import { esDueñoOAdmin } from '../middlewares/roles.js';
 
-// Público
+const router = Router();
+
 router.get('/', filtrarEventos);
-
-// Protegidas
 router.post('/', verificarToken, crearEvento);
 router.put('/:id', verificarToken, esDueñoOAdmin, actualizarEvento);
 router.delete('/:id', verificarToken, esDueñoOAdmin, eliminarEvento);
 
-
-module.exports = router;
+export default router;
